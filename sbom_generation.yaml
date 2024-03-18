@@ -11,14 +11,30 @@ shell: bash
 
 steps:
   - type: Command
+    name: "Create a Virtual Environment"
+    command: |
+      python3 -m venv sbom_env
+  - type: Command
+    name: "Activate the Environment"
+    command: |
+      source sbom_env/bin/activate
+  - type: Command
     name: "Install cyclonedx_py module"
     command: |
-      pip install cyclonedx-bom==3.11.7
+      pip install cyclonedx-bom
+  - type: Command
+    name: "Install the dependencies in the requirements.txt file"
+    command: |
+      pip install -r requirements.txt
+  - type: Command
+    name: "create a new requirements file that contains only the dependencies in the requirements.txt file with the latest version"
+    command: |
+      pip freeze -q -r requirements.txt | sed '/freeze/,$ d' > dependencies-frozen.txt
   - type: Command
     name: "Run Python cyclonedx_py module"
     command: |
       # For more details, visit https://github.com/CycloneDX/cyclonedx-python/blob/main/README.md
-      python3 -m cyclonedx_py -r -pb --format json -o artifactSBOM.json --schema-version 1.4
+      cyclonedx-py requirements dependencies-frozen.txt --of JSON -o artifactSBOM.json --sv 1.4
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
