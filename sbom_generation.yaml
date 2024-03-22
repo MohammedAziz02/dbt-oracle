@@ -29,7 +29,7 @@ steps:
   - type: Command
     name: "create a new requirements file that contains only the dependencies in the requirements.txt file with the installed version"
     command: |
-      pip freeze -q -r requirements.txt | sed '/freeze/,$ d' > dependencies-frozen.txt
+      pip freeze -r requirements.txt | sed '/freeze/,$ d' > dependencies-frozen.txt
   - type: Command
     name: "Run Python cyclonedx_py module"
     command: |
