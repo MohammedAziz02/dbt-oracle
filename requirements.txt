@@ -1,4 +1,4 @@
-dbt-core~=1.7,<1.8
+dbt-core==1.7.11
 cx_Oracle==8.3.0
 oracledb==2.1.0
 dash==2.14.2
