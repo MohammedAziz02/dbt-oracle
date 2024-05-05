@@ -11,6 +11,7 @@ shell: bash
 env:
   variables:
     CDXGEN_DEBUG_MODE: "debug"
+    PYTHON_CMD: "python3"
 
 steps:
   - type: Command
