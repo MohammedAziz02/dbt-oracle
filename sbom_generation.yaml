@@ -8,33 +8,29 @@ version: 0.1
 component: build
 timeoutInSeconds: 1000
 shell: bash
+env:
+  varibales:
+    CDXGEN_DEBUG_MODE: "debug"
 
 steps:
   - type: Command
-    name: "Create a Virtual Environment"
+    name: "python version"
     command: |
-      python3 -m venv sbom_env
+      python --version
+      which python
   - type: Command
-    name: "Activate the Environment"
+    name: "python3 version"
     command: |
-      source sbom_env/bin/activate
+      python3 --version
+      which python3
   - type: Command
-    name: "Install cyclonedx_py module"
+    name: "install cdxgen"
     command: |
-      pip install cyclonedx-bom==4.1.3
+         npm install -g @cyclonedx/cdxgen
   - type: Command
-    name: "Install the dependencies in the requirements.txt file"
+    name: "Run cdxgen"
     command: |
-      pip install -r requirements.txt
-  - type: Command
-    name: "create a new requirements file that contains only the dependencies in the requirements.txt file with the installed version"
-    command: |
-      pip freeze -r requirements.txt | sed '/freeze/,$ d' > dependencies-frozen.txt
-  - type: Command
-    name: "Run Python cyclonedx_py module"
-    command: |
-      # For more details, visit https://github.com/CycloneDX/cyclonedx-python/blob/main/README.md
-      cyclonedx-py requirements dependencies-frozen.txt --of JSON -o artifactSBOM.json --sv 1.4
+      cdxgen -t python -o artifactSBOM.json --spec-version 1.4
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
