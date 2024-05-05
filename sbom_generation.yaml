@@ -9,7 +9,7 @@ component: build
 timeoutInSeconds: 1000
 shell: bash
 env:
-  varibales:
+  variables:
     CDXGEN_DEBUG_MODE: "debug"
 
 steps:
