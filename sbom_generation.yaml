@@ -36,7 +36,11 @@ steps:
       else \
          cdxgen -t python -o artifactSBOM.json --spec-version 1.4 --project-name "$(basename $OCI_PRIMARY_SOURCE_URL)" --no-recurse
       fi \
+      echo "pkg:pypi/dbt-oracle@latest" >> metadataComponentPurls.txt
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
     location: ${OCI_PRIMARY_SOURCE_DIR}/artifactSBOM.json
+  - name: metadataComponentPurls
+    type: BINARY
+    location: ${OCI_PRIMARY_SOURCE_DIR}/metadataComponentPurls.txt
