@@ -35,7 +35,7 @@ steps:
         --exclude "*{requirements,dev,test}*{requirements,dev,test}*.txt" --project-name "$(basename $OCI_PRIMARY_SOURCE_URL)" --no-recurse
       else \
          cdxgen -t python -o artifactSBOM.json --spec-version 1.4 --project-name "$(basename $OCI_PRIMARY_SOURCE_URL)" --no-recurse
-      fi \
+      fi; \
       echo "pkg:pypi/dbt-oracle@latest" >> metadataComponentPurls.txt
 outputArtifacts:
   - name: artifactSBOM
